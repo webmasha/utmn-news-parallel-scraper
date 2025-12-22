@@ -3,7 +3,7 @@
 telegram_token: "YOUR_TELEGRAM_BOT_TOKEN"
 
 # URL-адрес новостного сайта
-news_url: "https://www.utmn.ru/news"
+news_url: "https://www.utmn.ru/news/stories/"
 
 # Конфигурация базы данных
 db_path: "news.db"

@@ -149,3 +149,4 @@ class AsyncFetcher:
         if html:
             # Помещаем кортеж (HTML, URL) в очередь для дальнейшей обработки
             await self.html_queue.put((html, url))
+            print(f"Помещен в очередь: {url}")

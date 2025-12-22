@@ -55,18 +55,15 @@
 1.  **Клонируйте репозиторий:**
     ```bash
     git clone https://github.com/webmasha/utmn-news-parallel-scraper.git
-    cd utmn-news-parallel-scraper-personal/Submodules/utmn-news-parallel-scraper
     ```
 2.  **Создайте и активируйте виртуальное окружение:**
     ```bash
-    python -m venv .venv
-    source .venv/bin/activate
+    uv init    
+    uv venv --seed
     ```
 3.  **Установите uv и зависимости:**
-    ```bash
-    pip install uv
-    uv pip compile pyproject.toml -o requirements.txt
-    pip install -r requirements.txt
+    ```bash  
+    uv pip install .  
     ```
 
 ## Конфигурация
@@ -81,17 +78,17 @@
 
 1.  **Инициализируйте базу данных:**
     ```bash
-    python scripts/init_db.py
+    uv run python $(pwd)/scripts/init_db.py
     ```
 
 2.  **Запустите скрейпер:**
     ```bash
-    python scripts/run_scraper.py
+    uv run python $(pwd)/scripts/run_scraper.py
     ```
 
 3.  **Запустите Telegram-бота:**
     ```bash
-    python scripts/run_bot.py
+    uv run python $(pwd)/scripts/run_bot.py
     ```
 4. **Запустите линтеры и тесты**
    ```bash
@@ -118,7 +115,7 @@ bash scripts/run_bench.sh
 
 Чтобы построить график результатов, выполните:
 ```bash
-python src/bench/plot_results.py
+uv run python $(pwd)/src/bench/plot_results.py
 ```
 
 ## Docker

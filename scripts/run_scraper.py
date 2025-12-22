@@ -3,6 +3,8 @@ import logging
 import yaml
 from pathlib import Path
 import sys
+import os # Add os import for os.cpu_count()
+from concurrent.futures import ProcessPoolExecutor
 
 # Добавляем корневую директорию проекта в sys.path
 # Это необходимо для корректного импорта модулей, например, из `src/`.
@@ -77,12 +79,25 @@ async def main():
 
     # Запуск продюсера и потребителей в контексте сессии сборщика
     async with fetcher:
-        # Создаем асинхронные задачи
-        producer_task = asyncio.create_task(fetcher.crawl())
-        consumer_task = asyncio.create_task(queue_manager.start_consumers())
+        with ProcessPoolExecutor(max_workers=fetcher_config.get("parsing_workers", 0) or os.cpu_count()) as executor:
+            # 1. Запускаем потребителей
+            consumer_tasks = await queue_manager.start_consumers(executor)
 
-        # Ожидаем завершения обеих задач
-        await asyncio.gather(producer_task, consumer_task)
+            # 2. Запускаем производителя
+            producer_task = asyncio.create_task(fetcher.crawl())
+
+            # 3. Ждем, пока производитель не закончит добавлять все в очередь
+            await producer_task
+
+            # 4. Ждем, пока очередь не будет обработана
+            await html_queue.join()
+
+            # 5. Отменяем потребителей
+            for task in consumer_tasks:
+                task.cancel()
+            
+            # Ждем завершения задач потребителей
+            await asyncio.gather(*consumer_tasks, return_exceptions=True)
 
 if __name__ == "__main__":
     asyncio.run(main())
