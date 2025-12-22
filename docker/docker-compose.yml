@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: utmn_news_app
+    restart: unless-stopped
+    volumes:
+      - ../:/app
+    environment:
+      # Pass the telegram token as an environment variable
+      # Make sure to create a .env file in the root of the project
+      # with the line: TELEGRAM_TOKEN=your_token_here
+      - TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
+    depends_on:
+      - redis
+    networks:
+      - app-network
+    command: python scripts/run_bot.py
+
+  redis:
+    image: "redis:alpine"
+    container_name: utmn_news_redis
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  redis-data:

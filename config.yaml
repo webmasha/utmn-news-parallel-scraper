@@ -1,0 +1,33 @@
+# Токен для Telegram-бота (получите у @BotFather)
+# В продакшене рекомендуется использовать переменные окружения
+telegram_token: "YOUR_TELEGRAM_BOT_TOKEN"
+
+# URL-адрес новостного сайта
+news_url: "https://www.utmn.ru/news"
+
+# Конфигурация базы данных
+db_path: "news.db"
+
+# Конфигурация скрейпера
+scraper:
+  # Количество одновременных подключений
+  concurrency: 10
+  # Таймаут запроса в секундах
+  timeout: 10
+  # Заголовок User-Agent
+  user_agent: "UTMN News Scraper/1.0 (https://github.com/masha/utmn-news-parallel-scraper-personal)"
+  # Задержка между запросами в секундах (чтобы не перегружать сервер)
+  request_delay: 0.1
+  # Количество ядер ЦП для парсинга (0 - автоопределение)
+  parsing_workers: 0
+
+# Конфигурация кэша (опционально)
+cache:
+  enabled: false
+  # URL-адрес для подключения к Redis
+  redis_url: "redis://localhost:6379/0"
+
+# Конфигурация логирования
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

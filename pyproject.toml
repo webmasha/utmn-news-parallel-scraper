@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "utmn-news-scraper"
+version = "0.1.0"
+description = "Hybrid async-parallel system for collecting and delivering news from the site https://www.utmn.ru/news using a Telegram bot"
+authors = ["Masha <masha@example.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiohttp = "^3.9.5"
+beautifulsoup4 = "^4.12.3"
+aiogram = "^3.5.0"
+python-dotenv = "^1.0.1"
+pyyaml = "^6.0.1"
+lxml = "^5.2.2"
+pytest = "^8.2.0"
+pytest-asyncio = "^0.23.6"
+matplotlib = "^3.8.4"
+psutil = "^5.9.8"
+redis = "^5.0.4"
+aiosqlite = "^0.20.0"
+
+[project]
+name = "utmn-news-scraper"
+version = "0.1.0"
+requires-python = ">=3.11"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
