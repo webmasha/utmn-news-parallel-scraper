@@ -5,6 +5,19 @@ telegram_token: "YOUR_TELEGRAM_BOT_TOKEN"
 # URL-адрес новостного сайта
 news_url: "https://www.utmn.ru/news/stories/"
 
+# Список категорий для парсинга
+news_categories:
+  - url: "https://www.utmn.ru/news/stories/nauka-i-innovatsii/"
+    name: "Наука"
+  - url: "https://www.utmn.ru/news/stories/innovatsii/"
+    name: "Инновации"
+  - url: "https://www.utmn.ru/news/stories/obrazovanie/"
+    name: "Образование"
+  - url: "https://www.utmn.ru/news/stories/mezhdunarodnaya-deyatelnost/"
+    name: "Международная деятельность"
+  - url: "https://www.utmn.ru/news/stories/studencheskaya-zhizn/"
+    name: "Студенческая деятельность"
+
 # Конфигурация базы данных
 db_path: "news.db"
 

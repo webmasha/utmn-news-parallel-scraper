@@ -109,8 +109,8 @@ class NewsStorage:
 
         # Добавляем условия фильтрации, если они предоставлены
         if section:
-            conditions.append("section = ?")
-            params.append(section)
+            conditions.append("section LIKE ?")
+            params.append(f"%{section}%")
         if start_date:
             conditions.append("date >= ?")
             params.append(start_date)
@@ -133,4 +133,11 @@ class NewsStorage:
             cursor = await db.execute(query, tuple(params))
             rows = await cursor.fetchall()
             # Преобразуем строки в стандартные словари
-            return [dict(row) for row in rows]
+            news_list = [dict(row) for row in rows]
+
+            # Фильтруем по section case-insensitive, если section задан
+            if section:
+                section_lower = section.lower()
+                news_list = [item for item in news_list if section_lower in item['section'].lower()]
+
+            return news_list

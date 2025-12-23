@@ -63,11 +63,13 @@ async def main():
     fetcher_config = config.get("scraper", {})
     fetcher = AsyncFetcher(
         base_url=config.get("news_url", "https://www.utmn.ru/news"),
+        categories=config.get("news_categories", []),
         concurrency=fetcher_config.get("concurrency", 10),
         timeout=fetcher_config.get("timeout", 10),
         user_agent=fetcher_config.get("user_agent", "UTMN News Scraper/1.0"),
         request_delay=fetcher_config.get("request_delay", 0.1),
         html_queue=html_queue,
+        use_local_html=fetcher_config.get("use_local_html", False),
     )
 
     # Настройка и создание экземпляра менеджера очереди (потребителя)
